@@ -75,12 +75,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private InputStream inputStream;
-    private OutputStream outputStream;
-
-    private PrintWriter output;
-    private BufferedReader input;
-
     private PrintWriter out;
     private BufferedReader in;
 
@@ -92,12 +86,6 @@ public class MainActivity extends AppCompatActivity {
             try {
                 System.out.println("STARING THREAD 1 TO CONNECT!!!");
                 socket = new Socket(SERVER_IP, SERVER_PORT);
-
-                inputStream = socket.getInputStream();
-                outputStream = socket.getOutputStream();
-
-                output = new PrintWriter(socket.getOutputStream());
-                input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
                 out = new PrintWriter(new BufferedWriter(
                         new OutputStreamWriter(socket.getOutputStream())),
@@ -131,27 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("msg....");
                     System.out.println("reading in message");
 
-//                    final String message = input.readLine();
-
                     final String message = in.readLine();
-
-//                    String response = "";
-//
-//                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(
-//                            1024);
-//                    byte[] buffer = new byte[1024];
-//
-//                    int bytesRead;
-//
-//                    /*
-//                     * notice: inputStream.read() will block if no data return
-//                     */
-//                    while ((bytesRead = inputStream.read(buffer)) != -1) {
-//                        byteArrayOutputStream.write(buffer, 0, bytesRead);
-//                        response += byteArrayOutputStream.toString("UTF-8");
-//                    }
-//
-//                    final String message = response;
 
                     System.out.println("message received: " + message);
                     if (message != null && !message.isEmpty()) {
@@ -189,14 +157,7 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("THREAD 3 IS RUNNING...");
             System.out.println("writing out the message: " + message);
 
-//            output.write(message);
-//            output.flush();
-
             out.println(message);
-
-//            PrintStream printStream = new PrintStream(outputStream);
-//            printStream.print(message);
-//            printStream.close();
 
             runOnUiThread(new Runnable() {
                 @Override
