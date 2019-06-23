@@ -23,6 +23,7 @@ public class AnimationActivity extends AppCompatActivity {
 
         // remove title
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getSupportActionBar().hide(); //hide the title bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
