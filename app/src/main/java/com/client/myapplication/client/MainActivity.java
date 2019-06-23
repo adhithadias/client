@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText etIP, etPort;
     TextView tvMessages;
+    ScrollView tvScroll;
 
     EditText etMessage;
     Button btnSend;
@@ -44,9 +46,10 @@ public class MainActivity extends AppCompatActivity {
         etPort = findViewById(R.id.etPort);
         //test
         etIP.setText("192.168.8.101");
-        etPort.setText("8080");
+        etPort.setText("8070");
 
         tvMessages = findViewById(R.id.tvMessages);
+        tvScroll = findViewById(R.id.tvScroll);
         etMessage = findViewById(R.id.etMessage);
         btnSend = findViewById(R.id.btnSend);
 
