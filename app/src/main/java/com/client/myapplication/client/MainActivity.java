@@ -1,6 +1,7 @@
 package com.client.myapplication.client;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,20 +12,16 @@ import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
 @SuppressLint("SetTextI18n")
 public class MainActivity extends AppCompatActivity {
 
-    Thread Thread1 = null;
+    Thread clientThread = null;
 
     EditText etIP, etPort;
     TextView tvMessages;
@@ -36,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     String SERVER_IP;
     int SERVER_PORT;
 
+    boolean connected = false;
+    public static String receivedMessage = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +56,18 @@ public class MainActivity extends AppCompatActivity {
         btnConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tvMessages.setText("");
-                SERVER_IP = etIP.getText().toString().trim();
-                SERVER_PORT = Integer.parseInt(etPort.getText().toString().trim());
-                System.out.println("CREATING THREAD 1 TO CONNECT!!!");
-                Thread1 = new Thread(new Thread1());
-                Thread1.start();
+                if (connected) {
+                    Intent intent = new Intent(getApplicationContext(), AnimationActivity.class);
+                    intent.putExtra("message", receivedMessage); //Optional parameters
+                    startActivity(intent);
+                } else {
+                    tvMessages.setText("");
+                    SERVER_IP = etIP.getText().toString().trim();
+                    SERVER_PORT = Integer.parseInt(etPort.getText().toString().trim());
+                    System.out.println("CREATING THREAD 1 TO CONNECT!!!");
+                    clientThread = new Thread(new ClientThread());
+                    clientThread.start();
+                }
             }
         });
 
@@ -72,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 String message = etMessage.getText().toString().trim();
                 if (!message.isEmpty()) {
                     System.out.println("STARTING THREAD 3 TO SEND MESSAGES TO THE SERVER");
-                    new Thread(new Thread3(message)).start();
+                    new Thread(new WriteThread(message)).start();
                 }
             }
         });
@@ -81,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     private PrintWriter out;
     private BufferedReader in;
 
-    class Thread1 implements Runnable {
+    class ClientThread implements Runnable {
 
         @Override
         public void run() {
@@ -95,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                         true);
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-
+                connected = true;
                 runOnUiThread(new Runnable() {
 
                     @Override
@@ -105,15 +110,27 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 System.out.println("STARTING THREAD 2 FOR READING MESSAGES FROM THE SERVER");
-                new Thread(new Thread2()).start();
+                new Thread(new ReadThread()).start();
+
+                Intent intent = new Intent(getApplicationContext(), AnimationActivity.class);
+                intent.putExtra("message", receivedMessage); //Optional parameters
+                startActivity(intent);
+
             } catch (IOException e) {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        tvMessages.setText("Connection error. Check port and IP of server.\n");
+                    }
+                });
                 e.printStackTrace();
             }
         }
     }
 
     // thread 2 is for reading
-    class Thread2 implements Runnable {
+    class ReadThread implements Runnable {
         @Override
         public void run() {
             System.out.println("THREAD 2 IS RUNNING...");
@@ -127,17 +144,20 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("message received: " + message);
                     if (message != null && !message.isEmpty()) {
                         System.out.println("msg is not empty");
+                        receivedMessage = message;
+
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 tvMessages.append("server: " + message + "\n");
                             }
                         });
+
                     } else {
                         System.out.println("message is empty");
-
-                        Thread1 = new Thread(new Thread1());
-                        Thread1.start();
+                        connected = false;
+                        clientThread = new Thread(new ClientThread());
+                        clientThread.start();
                         return;
                     }
                 } catch (IOException e) {
@@ -148,10 +168,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // thread 3 is for writing
-    class Thread3 implements Runnable {
+    class WriteThread implements Runnable {
         private String message;
 
-        Thread3(String message) {
+        WriteThread(String message) {
             this.message = message;
         }
 

@@ -44,8 +44,7 @@
             android:id="@+id/tvMessages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+            android:inputType="textMultiLine" />
 
     </ScrollView>
 
