@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.client.myapplication.client.AnimationActivity">
+            android:name="com.client.myapplication.client.AnimationActivity"
+            android:screenOrientation="portrait" >
 
         </activity>
     </application>

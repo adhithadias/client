@@ -151,7 +151,7 @@ public class CharacterSprite {
                     timerStarted = true;
                     activate();
                     // - execute one time sound function
-                    DURATION = 3500;
+                    DURATION = 2500;
                     playLieSound();
                 }
 
@@ -175,8 +175,8 @@ public class CharacterSprite {
 
     }
 
-    private void drawTruthOrLie(Canvas canvas, int backgroudColour, int textColour, String shownText) {
-        canvas.drawColor(backgroudColour);
+    private void drawTruthOrLie(Canvas canvas, int backgroundColour, int textColour, String shownText) {
+        canvas.drawColor(backgroundColour);
 
         textPaint.setColor(textColour);
         int xPos = (canvas.getWidth() / 2);
