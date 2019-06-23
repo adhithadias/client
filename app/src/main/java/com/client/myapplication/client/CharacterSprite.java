@@ -186,12 +186,12 @@ public class CharacterSprite {
     }
 
     private void playLieSound() {
-        final MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.such_a_shit);
+        final MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.game_sound_incorrect_with_delay);
         mediaPlayer.start();
     }
 
     private void playTruthSound() {
-        final MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.tick_sound);
+        final MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.game_sound_correct);
         mediaPlayer.start();
     }
 
