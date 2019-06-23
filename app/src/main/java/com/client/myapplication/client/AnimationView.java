@@ -13,16 +13,16 @@ import android.view.SurfaceView;
  * Created by Adhitha Dias on 23/06/2019.
  */
 
-public class GameView extends SurfaceView implements SurfaceHolder.Callback {
+public class AnimationView extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread thread;
     private CharacterSprite characterSprite;
     static final int screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
     static final int screenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
 
-    private String TAG = "GameView";
+    private String TAG = "AnimationView";
 
-    public GameView(Context context) {
+    public AnimationView(Context context) {
 
         super(context);
 
@@ -69,7 +69,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update() {
-//        System.out.println("updating canvas GameView");
+//        System.out.println("updating canvas AnimationView");
         characterSprite.update();
 
     }

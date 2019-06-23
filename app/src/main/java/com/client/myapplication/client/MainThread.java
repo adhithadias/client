@@ -8,7 +8,7 @@ import android.view.SurfaceHolder;
  */
 
 public class MainThread extends Thread {
-    private GameView gameView;
+    private AnimationView animationView;
     private SurfaceHolder surfaceHolder;
     private boolean running;
     public static Canvas canvas;
@@ -16,10 +16,10 @@ public class MainThread extends Thread {
     private double averageFPS;
 
 
-    public MainThread(SurfaceHolder surfaceHolder, GameView gameView) {
+    public MainThread(SurfaceHolder surfaceHolder, AnimationView animationView) {
         super();
         this.surfaceHolder = surfaceHolder;
-        this.gameView = gameView;
+        this.animationView = animationView;
     }
 
     @Override
@@ -42,8 +42,8 @@ public class MainThread extends Thread {
                 canvas = this.surfaceHolder.lockCanvas();
 
                 synchronized (surfaceHolder) {
-                    this.gameView.update();
-                    this.gameView.draw(canvas);
+                    this.animationView.update();
+                    this.animationView.draw(canvas);
                 }
             } catch (Exception e) {
             }

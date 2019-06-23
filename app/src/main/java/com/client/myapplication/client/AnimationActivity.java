@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 public class AnimationActivity extends AppCompatActivity {
 
-    private GameView gameView;
+    private AnimationView animationView;
     private String TAG = "AnimationActivity";
 
     @Override
@@ -26,8 +26,8 @@ public class AnimationActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        gameView = new GameView(this);
-        setContentView(gameView);
+        animationView = new AnimationView(this);
+        setContentView(animationView);
 
         Log.d(TAG, "onCreate: Manual Activity onCreate!");
 
