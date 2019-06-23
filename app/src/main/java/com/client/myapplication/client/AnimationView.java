@@ -47,7 +47,8 @@ public class AnimationView extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        characterSprite = new CharacterSprite(BitmapFactory.decodeResource(getResources(), R.drawable.avdgreen));
+//        characterSprite = new CharacterSprite(BitmapFactory.decodeResource(getResources(), R.drawable.avdgreen));
+        characterSprite = new CharacterSprite(getContext());
 
         thread.setRunning(true);
         thread.start();

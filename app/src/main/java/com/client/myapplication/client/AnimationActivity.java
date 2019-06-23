@@ -29,7 +29,7 @@ public class AnimationActivity extends AppCompatActivity {
         animationView = new AnimationView(this);
         setContentView(animationView);
 
-        Log.d(TAG, "onCreate: Manual Activity onCreate!");
+        Log.d(TAG, "onCreate: Animation Activity onCreate!");
 
 //        setContentView(R.layout.activity_animation);
 //        // Capture the layout's TextView and set the string as its text
